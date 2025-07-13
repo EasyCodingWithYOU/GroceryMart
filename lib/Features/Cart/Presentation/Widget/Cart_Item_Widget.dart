@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_mart/Core/Constant/App_Colors/App_Colors.dart';
-import 'package:grocery_mart/Features/Shop/Domain/Entity/Entity.dart';
+import 'package:grocery_mart/Features/Cart/Domain/Entity/Cart_Entity.dart';
 
 class CartItemWidget extends StatelessWidget {
-  final CardItemEntity item;
+  final CartItemEntity item;
   final int quantity;
   final VoidCallback onAdd;
   final VoidCallback onRemove;

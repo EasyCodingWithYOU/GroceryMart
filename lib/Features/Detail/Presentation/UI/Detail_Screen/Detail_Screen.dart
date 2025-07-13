@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery_mart/Core/Constant/App_Colors/App_Colors.dart';
+import 'package:grocery_mart/Core/Constant/Route_Names/Route_Names.dart';
+import 'package:grocery_mart/Features/Cart/Data/Model/Cart_Entity_Model.dart';
+import 'package:grocery_mart/Features/Cart/Domain/Entity/Cart_Entity.dart';
+import 'package:grocery_mart/Features/Cart/Presentation/bloc/cart_bloc.dart';
+import 'package:grocery_mart/Features/Cart/Presentation/bloc/cart_event.dart';
 import 'package:grocery_mart/Features/Detail/Presentation/UI/Widgets/Expandable_Review_Tile.dart';
 import 'package:grocery_mart/Features/Detail/Presentation/UI/Widgets/Expandable_Tile.dart';
 import 'package:grocery_mart/Features/Shop/Domain/Entity/Entity.dart';
@@ -20,7 +26,8 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  int quantity = 1;
+  int Itemquantity = 1;
+  double totalPrice = 00;
   bool expandDetail = false;
   bool expandNutrition = false;
   bool expandReview = false;
@@ -124,8 +131,11 @@ class _DetailScreenState extends State<DetailScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          if (quantity > 1) {
-                            setState(() => quantity--);
+                          if (Itemquantity > 1) {
+                            setState(() {
+                              Itemquantity--;
+                              totalPrice = item.price * Itemquantity;
+                            });
                           }
                         },
                         child: Icon(Icons.remove, size: 18.sp),
@@ -141,13 +151,16 @@ class _DetailScreenState extends State<DetailScreen> {
                           borderRadius: BorderRadius.circular(14.r),
                         ),
                         child: Text(
-                          quantity.toString(),
+                          Itemquantity.toString(),
                           style: TextStyle(fontSize: 18.sp),
                         ),
                       ),
                       SizedBox(width: 12.w),
                       GestureDetector(
-                        onTap: () => setState(() => quantity++),
+                        onTap: () => setState(() {
+                          Itemquantity++;
+                          totalPrice = item.price * Itemquantity;
+                        }),
                         child: Icon(
                           Icons.add,
                           size: 22.sp,
@@ -156,7 +169,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                       Spacer(),
                       Text(
-                        '\$${(item.price * quantity).toStringAsFixed(2)}',
+                        '\$${(totalPrice).toStringAsFixed(2)}',
                         style: TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
@@ -203,6 +216,26 @@ class _DetailScreenState extends State<DetailScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         // Add to basket logic
+                        context.read<CartBloc>().add(
+                          AddCart(
+                            CartItemModel.fromEntity(
+                              CartItemEntity(
+                                id: item.id,
+                                imageUrl: item.imageUrl, // default image
+                                name: item.name,
+                                quantity: item.quantity,
+                                price: totalPrice,
+                                favourite: item.favourite,
+                                productDetail: item.productDetail,
+                                nutrition: item.nutrition,
+                                review: item.review,
+                                rating: item.rating,
+                                orderQuantity: Itemquantity,
+                              ),
+                            ),
+                          ),
+                        );
+                        Navigator.pushNamed(context, RouteName.bottomNavBar);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,

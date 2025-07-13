@@ -29,4 +29,6 @@ class AppColors {
 
     AppColors.bgPurple,
   ];
+
+  static var textColor;
 }
