@@ -1,16 +1,54 @@
-# grocery_mart
+🛒 GroceryMart – Demo Flutter App
+GroceryMart is a demo Flutter application designed to showcase clean UI development and basic state management using BLoC. This app simulates an online grocery shopping experience with a focus on key user interface flows and persistent cart management.
 
-A new Flutter project.
+🚀 Features
+✅ Splash Screen – Initial loading screen to introduce the app.
 
-## Getting Started
+✅ Onboarding Screen – Walks users through the app’s value proposition.
 
-This project is a starting point for a Flutter application.
+✅ Bottom Navigation Bar – Main navigation structure with tabs.
 
-A few resources to get you started if this is your first Flutter project:
+✅ Shop Screen – Displays grocery items as cards using dummy data.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+✅ Detail Screen – Detailed view of selected grocery item.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+✅ Cart Screen – Add, remove, increase, or decrease item quantity.
+
+✅ State Management – Implemented using BLoC pattern for cart operations.
+
+✅ Data Persistence – Cart data is stored locally using SharedPreferences to preserve state even after app restarts.
+
+📱 App Flow
+Splash Screen →
+
+Onboarding Screen →
+
+Bottom Navigation (Home)
+
+Displays grocery cards.
+
+Tapping the ➕ icon on a card opens the Detail Screen.
+
+Detail Screen
+
+Add the item to cart.
+
+Cart Screen
+
+View all added items.
+
+Increase/decrease quantity or delete items.
+
+All changes are preserved even after closing and reopening the app.
+
+🧠 State Management
+BLoC Pattern is used for managing the cart.
+
+Logic is implemented cleanly in a repository layer (CartRepositoryImpl).
+
+The cart operations (add/remove/update) interact with SharedPreferences for local persistence.
+
+📦 Data
+The current version uses dummy data for grocery items.
+
+No backend/API integration is implemented in this demo.
